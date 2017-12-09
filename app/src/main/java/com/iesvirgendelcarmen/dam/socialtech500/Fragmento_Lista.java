@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +18,13 @@ import java.util.ArrayList;
  * Created by matinal on 04/12/2017.
  */
 
-public class Fragmento_Lista extends FragmentActivity {
+public class Fragmento_Lista extends Fragment  {
     private ListView lista;
-    private ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
     private Contacto con;
     private Fragmentos_detalles detalle;
-/*
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class Fragmento_Lista extends FragmentActivity {
 
 
         lista = (ListView) view.findViewById(R.id.lista);
-        AdapterContacto adaptador = new AdapterContacto(getActivity(), listaContactos);
+        AdapterContacto adaptador = new AdapterContacto(getActivity(), ((MainActivity)getActivity()).getContactos());
         lista.setAdapter(adaptador);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -37,14 +40,16 @@ public class Fragmento_Lista extends FragmentActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 con = (Contacto) adapterView.getItemAtPosition(i);
-                detalle = new Fragmentos_detalles(con);
+
+                System.out.println(con);
+
+                FragmentManager FM = getActivity().getSupportFragmentManager();
+                FragmentTransaction FT = FM.beginTransaction();
+                Fragmentos_detalles f = new Fragmentos_detalles(con);
+                FT.replace(R.id.contenedorPrincipal,f);
+                FT.commit();
             }
         });
         return view;
-    }*/
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 }

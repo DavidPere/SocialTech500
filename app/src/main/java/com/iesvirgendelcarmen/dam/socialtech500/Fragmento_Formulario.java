@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,6 +37,7 @@ public class Fragmento_Formulario extends Fragment {
     private TextView ContadorContactos;
 
     private Button button;
+    private Button button2;
 
 
     private EditText editTextNombre;
@@ -47,22 +49,20 @@ public class Fragmento_Formulario extends Fragment {
     private Spinner spinnerProvincias;
 
     private SeekBar seekbar;
-    private ListView lista;
     private MultiAutoCompleteTextView multiTexto;
     private RadioGroup rg;
 
 
     private Contacto contacto;
-    private ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragmentos_formulario, container, false);
+        View view = inflater.inflate(R.layout.fragmentos_formulario, container, false);
 
 
-        if (savedInstanceState != null)
-            listaContactos = (ArrayList<Contacto>) savedInstanceState.getSerializable("listaContactos");
+        //if (savedInstanceState != null)
+            //listaContactos = (ArrayList<Contacto>) savedInstanceState.getSerializable("listaContactos");
 
         editTextNombre = (EditText) view.findViewById(R.id.editNombre);
         editTextApellidos = (EditText) view.findViewById(R.id.editApellido);
@@ -73,7 +73,8 @@ public class Fragmento_Formulario extends Fragment {
         rg = (RadioGroup) view.findViewById(R.id.radioGroup);
         ContadorContactos = (TextView) view.findViewById(R.id.ContadorContactos);
         button = (Button)view.findViewById(R.id.botonGuardar);
-        textViewProvincias = (TextView)view.findViewById(R.id.provincias);
+        button2 = (Button)view.findViewById(R.id.BotonMostrarLista);
+        textViewProvincias = (TextView) view.findViewById(R.id.provincias);
 
 
         spinner = (Spinner) view.findViewById(R.id.spinnerFormacion);
@@ -109,11 +110,18 @@ public class Fragmento_Formulario extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("Pueba","hola");
                 guardarContacto(view);
+
                 //Intent intent = new Intent(getActivity(), Fragmento_Lista.class);
                 //startActivity(intent);
                 //Log.v("Pueba","hola");
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarLista(view);
             }
         });
 
@@ -150,7 +158,7 @@ public class Fragmento_Formulario extends Fragment {
           String apellido = editTextApellidos.getText().toString();
           String telefono = editTextTelefono.getText().toString();
           String email = editTextEmail.getText().toString();
-          String provincia = textViewProvincias.getText().toString();
+          String provincia =  spinnerProvincias.getSelectedItem().toString();
           String edad = textViewEdad.getText().toString();
           String formacion = multiTexto.getText().toString();
           String sexo;
@@ -166,14 +174,31 @@ public class Fragmento_Formulario extends Fragment {
           }
 
           contacto = new Contacto(nombre, apellido, telefono, email, edad, formacion, sexo,provincia);
-          listaContactos.add(contacto);
+          ((MainActivity)getActivity()).getContactos().add(contacto);
+
+          System.out.println(contacto);
 
 
-          for (int i = 0; i < listaContactos.size(); i++) {
-              int numero = listaContactos.size();
+          for (int i = 0; i < ((MainActivity)getActivity()).getContactos().size(); i++) {
+              int numero = ((MainActivity)getActivity()).getContactos().size();
               ContadorContactos.setText("" + numero);
 
           }
 
       }
+
+      // metodo mostrar lista
+       public void mostrarLista (View view){
+
+            FragmentManager FM = getActivity().getSupportFragmentManager();
+           FragmentTransaction FT = FM.beginTransaction();
+           Fragmento_Lista f = new Fragmento_Lista();
+           FT.replace(R.id.contenedorPrincipal,f);
+           FT.commit();
+
+
+
+
+           }
+
 }

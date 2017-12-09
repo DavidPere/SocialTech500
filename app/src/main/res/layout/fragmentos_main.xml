@@ -1,34 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contenedorPrincipal"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <fragment
-        android:id="@+id/formulario"
-        android:name="com.iesvirgendelcarmen.dam.socialtech500.Fragmento_Formulario"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp"></fragment>
-
-
-
-
-    <!--<fragment-->
-        <!--android:id="@+id/lista"-->
-        <!--android:name="com.iesvirgendelcarmen.dam.socialtech500.Fragmento_Lista"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"></fragment>-->
-
-    <!--<fragment-->
-    <!--android:id="@+id/detalles"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_weight="1"-->
-    <!--android:layout_height="match_parent"></fragment>-->
-
-
-
-</LinearLayout>
+</FrameLayout>
 

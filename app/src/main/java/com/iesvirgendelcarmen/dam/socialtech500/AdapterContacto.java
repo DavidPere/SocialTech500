@@ -30,11 +30,12 @@ public class AdapterContacto extends ArrayAdapter<Contacto> {
 
 
         TextView nombre = (TextView) convertView.findViewById(R.id.listViewNombre);
+        TextView apellido =(TextView) convertView.findViewById(R.id.listViewApellidos);
         TextView email = (TextView) convertView.findViewById(R.id.listViewEmail);
 
         nombre.setText(aux.getNombre());
         email.setText(aux.getEmail());
-
+        apellido.setText(aux.getApellidos());
         return convertView;
     }
 }

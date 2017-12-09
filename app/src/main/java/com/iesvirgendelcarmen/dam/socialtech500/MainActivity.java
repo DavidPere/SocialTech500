@@ -5,7 +5,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+    private ArrayList<Contacto> listaContactos = new ArrayList<Contacto>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,11 +16,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.fragmentos_main);
 
 
+
         FragmentManager FM = getSupportFragmentManager();
         FragmentTransaction FT = FM.beginTransaction();
-
-        FragmentManager FM2 = getSupportFragmentManager();
-        FragmentTransaction FT2 = FM2.beginTransaction();
+        Fragmento_Formulario f = new Fragmento_Formulario();
+        FT.replace(R.id.contenedorPrincipal,f);
+        FT.commit();
 
 
 
@@ -29,5 +33,9 @@ public class MainActivity extends AppCompatActivity {
         FT3.replace(R.id.detalles,fragment3);
         FT3.commit();*/
 
+    }
+
+    public ArrayList<Contacto> getContactos() {
+        return listaContactos ;
     }
 }
